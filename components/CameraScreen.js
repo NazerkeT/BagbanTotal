@@ -24,18 +24,24 @@ export default class CameraScreen extends React.Component {
     max_key: '',
     max_value: 0,
     mas: {},
-    loading: false
+    loading: false,
+    cameraEnabled:false,
   };
   static navigationOptions = {
     header: null
   };
-  static tabbarOptions = {
-    hide: true
+  // static tabbarOptions = {
+  //   hide: true
+  // };
+  goBackButton = () => {
+    this.props.navigation.goBack();
   };
-
   async componentWillMount() {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    this.setState({ hasCameraPermission: status === 'granted' });
+    const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    this.setState({ hasCameraPermission: status === 'granted'});
+    requestAnimationFrame(() => {
+      this.setState({cameraEnabled:true})
+    })
   }
   setModalVisible(visible) {
     this.setState({
@@ -65,7 +71,7 @@ export default class CameraScreen extends React.Component {
     console.log('Max:', this.state.max_key, ':', this.state.max_value);
     this.props.navigation.navigate('Details', {
       name: this.state.max_key
-    });
+    })
   };
 
   render() {
@@ -78,6 +84,12 @@ export default class CameraScreen extends React.Component {
       return (
         <View style={{ flex: 1 }}>
           <StatusBar backgroundColor="blue" barStyle="light-content" />
+          <TouchableOpacity
+            style={styles.goBackButton}
+            onPress={this.goBackButton}
+          >
+            <Ionicons name={'ios-arrow-back'} size={60} color={'#fff'} />
+          </TouchableOpacity>
           <Camera
             style={{
               flex: 0.8
@@ -139,12 +151,14 @@ export default class CameraScreen extends React.Component {
       this.setState({
         cameraImg: photo.uri
       });
+      await this.setState({cameraEnabled:false})
       this._handleImagePicked(this.state.cameraImg);
     }
   };
 
   _pickImage = async () => {
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    await this.setState({cameraEnabled:false})
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
         allowsEditing: true,
@@ -213,6 +227,20 @@ async function uploadImageAsync(uri) {
 }
 
 const styles = StyleSheet.create({
+  goBackButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#28D190',
+    borderRadius: 100,
+    borderWidth: 1,
+    paddingRight: 5,
+    borderColor: '#28D190',
+    width: 60,
+    height: 60,
+    position: 'absolute',
+    top: 30,
+    left: 15
+  },
   takePhoto: {
     flex: 0.2,
     height: 60,
@@ -240,7 +268,7 @@ const styles = StyleSheet.create({
   },
   ReverseCameraButton: {
     alignSelf: 'center',
-    
+
     width: 60
   },
   albumButton: {

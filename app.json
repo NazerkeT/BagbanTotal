@@ -12,14 +12,20 @@
       "resizeMode": "cover"
     },
     "android": {
+      "versionCode": 5,
       "package": "com.nazerketurtayevaesentai.Bagban",
-      "permissions": []
+      "permissions": [
+        "CAMERA",
+        "WRITE_EXTERNAL_STORAGE",
+        "READ_INTERNAL_STORAGE",
+        "READ_EXTERNAL_STORAGE"
+      ]
     },
     "ios": {
       "bundleIdentifier": "com.nazerketurtayevaesentai.Bagban"
     },
     "packagerOpts": {
       "nonPersistent": "--nonPersistent"
-    }
+    },
   }
 }

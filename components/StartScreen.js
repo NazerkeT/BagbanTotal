@@ -19,7 +19,7 @@ export default class StartScreen extends React.Component {
       if (!value) {
         this.props.navigation.navigate('Onboarding');
       } else {
-        this.props.navigation.navigate('MainStack');
+        this.props.navigation.navigate('Home');
       }
     } catch (error) {
       console.log(error);

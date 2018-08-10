@@ -43,7 +43,7 @@ class HomeScreen extends React.Component {
         }}
       >
         <StatusBar backgroundColor="blue" barStyle="light-content" />
-          <Card style={{ backgroundColor: '#eaeaeaeaea' }} title="Растения дня">
+          <Card style={{ backgroundColor: '#eaeaeaeaea'}} title="Растения дня">
             <Image
               style={styles.image}
               source={{
@@ -56,6 +56,15 @@ class HomeScreen extends React.Component {
               посетить в Монте-Карло.
             </Text>
           </Card>
+          <View style={styles.button}>
+          <Button
+            raised
+            color="#28D190"
+            onPress={() => this.props.navigation.navigate('Camera')}
+            title='Найти растение!'
+          >
+          </Button>
+          </View>
       </View>
     );
   }
@@ -71,7 +80,13 @@ const styles = StyleSheet.create({
   image:{
     height: 230,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+  },
+  button:{
+    marginTop:10,
+    paddingTop:10,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });
 

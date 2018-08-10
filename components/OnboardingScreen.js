@@ -19,7 +19,7 @@ export default class OnboardingScreen extends React.Component {
   navigateScreen = () => {
     const resetAction = StackActions.reset({
       index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'MainStack' })]
+      actions: [NavigationActions.navigate({ routeName: 'Home' })]
     });
     this.props.navigation.dispatch(resetAction);
   };
